@@ -1,5 +1,5 @@
 #!/bin/bash
-# should be run as root and only on Ubuntu 20/22/24, Debian 10/11 (Buster/Bullseye) versions!
+# should be run as root and only on Ubuntu or Debian versions!
 echo "Welcome to the MediacMS installation!";
 
 if [ `id -u` -ne 0 ]
@@ -19,14 +19,8 @@ It is expected to run on a new system **with no running instances of any these s
     esac
 done
 
-osVersion=$(lsb_release -d)
-if [[ $osVersion == *"Ubuntu 20"* ]] || [[ $osVersion == *"Ubuntu 22"* ]] || [[ $osVersion == *"Ubuntu 24.04"* ]] || [[ $osVersion == *"buster"* ]] || [[ $osVersion == *"bullseye"* ]]; then
-    echo 'Performing system update and dependency installation, this will take a few minutes'
-    apt-get update && apt-get -y upgrade && apt-get install python3.12-venv python3.12-dev virtualenv redis-server postgresql nginx git gcc vim unzip imagemagick python3-certbot-nginx certbot wget xz-utils -y
-else
-    echo "This script is tested for Ubuntu 20/22/24 versions only, if you want to try MediaCMS on another system you have to perform the manual installation"
-    exit
-fi
+echo 'Performing system update and dependency installation, this will take a few minutes'
+apt-get update && apt-get -y upgrade && apt-get install python3.12-venv python3.12-dev virtualenv redis-server postgresql nginx git gcc vim unzip imagemagick python3-certbot-nginx certbot wget xz-utils -y
 
 # Install ffmpeg
 echo "Installing ffmpeg"
